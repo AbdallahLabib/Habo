@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,9 +16,10 @@ import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   addLicenses();
   runApp(
