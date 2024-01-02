@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habo/navigation/routes.dart';
+import 'package:habo/core/navigation/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   static MaterialPage page() {
