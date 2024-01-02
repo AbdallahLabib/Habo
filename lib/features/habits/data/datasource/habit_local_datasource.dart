@@ -2,15 +2,20 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:habo/core/helpers/constants.dart';
-import 'package:habo/features/habits/presentation/screen/habit.dart';
-import 'package:habo/core/helpers/helpers.dart';
-import 'package:habo/features/habits/data/model/habit_data.dart';
 import 'package:sqflite/sqflite.dart';
 
-class HaboModel {
-  late Database db;
+import 'package:habo/core/helpers/constants.dart';
+import 'package:habo/core/helpers/helpers.dart';
+import 'package:habo/features/habits/data/model/habit_data.dart';
+import 'package:habo/features/habits/presentation/screen/habit.dart';
 
+class HabitLocalDatabase {
+  late Database db;
+  
+  HabitLocalDatabase({
+    required this.db,
+  });
+  
   Future<void> deleteEvent(int id, DateTime dateTime) async {
     try {
       await db.delete("events",
