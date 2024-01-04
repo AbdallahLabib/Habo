@@ -25,6 +25,7 @@ class Habit extends StatefulWidget {
   Map<String, dynamic> toMap() {
     return {
       "id": habitData.id,
+      "user_id": habitData.userId,
       "title": habitData.title,
       "twoDayRule": habitData.twoDayRule ? 1 : 0,
       "position": habitData.position,

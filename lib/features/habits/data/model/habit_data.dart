@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class HabitData {
   HabitData({
     this.id,
+    this.userId,
     required this.position,
     required this.title,
     required this.twoDayRule,
@@ -21,9 +22,10 @@ class HabitData {
     required this.accountant,
   });
 
+  int? id;
+  String? userId;
   SplayTreeMap<DateTime, List> events;
   int streak = 0;
-  int? id;
   int position;
   String title;
   bool twoDayRule;

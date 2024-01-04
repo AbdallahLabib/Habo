@@ -5,7 +5,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:habo/core/errors/failure.dart';
 import 'package:habo/core/helpers/app_typedefs.dart';
 import 'package:habo/core/helpers/constants.dart';
-import 'package:habo/features/habits/domain/entities/habit_entity.dart';
 import 'package:habo/features/habits/presentation/widgets/habit.dart';
 import 'package:habo/features/habits/application/habits_manager.dart';
 import 'package:habo/features/habits/presentation/widgets/in_button.dart';

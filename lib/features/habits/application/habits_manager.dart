@@ -26,8 +26,6 @@ class HabitsManager extends ChangeNotifier {
   Habit? deletedHabit;
   Queue<Habit> toDelete = Queue();
 
-
-
   void initialize() async {
     await initModel();
     await Future.delayed(const Duration(seconds: 5));
@@ -171,18 +169,19 @@ class HabitsManager extends ChangeNotifier {
   }
 
   addHabit(
-      String title,
-      bool twoDayRule,
-      String cue,
-      String routine,
-      String reward,
-      bool showReward,
-      bool advanced,
-      bool notification,
-      TimeOfDay notTime,
-      String sanction,
-      bool showSanction,
-      String accountant) {
+    String title,
+    bool twoDayRule,
+    String cue,
+    String routine,
+    String reward,
+    bool showReward,
+    bool advanced,
+    bool notification,
+    TimeOfDay notTime,
+    String sanction,
+    bool showSanction,
+    String accountant,
+  ) {
     Habit newHabit = Habit(
       habitData: HabitData(
         position: allHabits.length,

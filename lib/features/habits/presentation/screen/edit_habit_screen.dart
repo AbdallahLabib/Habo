@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +11,7 @@ import 'package:habo/features/habits/application/habits_manager.dart';
 import 'package:habo/features/habits/data/model/habit_data.dart';
 import 'package:habo/core/navigation/routes.dart';
 import 'package:habo/core/services/notifications.dart';
-import 'package:habo/features/habits/data/model/habit_model.dart';
-import 'package:habo/features/habits/domain/entities/habit_entity.dart';
+import 'package:habo/features/habits/presentation/widgets/habit.dart';
 import 'package:habo/features/habits/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -240,10 +241,18 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
                 // Add habit to Firebase Firestore for a specific user whose id is: 'HqfRpEga6B1eKW6tLcnN'
                 // This is just a showcase.
                 createHabit(
-                  habit: HabitEntity(
-                    habitName: title.text.toString(),
-                    userId: 'HqfRpEga6B1eKW6tLcnN',
-                  ),
+                  title.text.toString(),
+                  twoDayRule,
+                  cue.text.toString(),
+                  routine.text.toString(),
+                  reward.text.toString(),
+                  showReward,
+                  advanced,
+                  notification,
+                  notTime,
+                  sanction.text.toString(),
+                  showSanction,
+                  accountant.text.toString(),
                 );
               }
               Navigator.of(context).pop();
@@ -510,24 +519,51 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
     );
   }
 
-  FutureVoid createHabit({required HabitEntity habit}) async {
+  FutureVoid createHabit(
+    String title,
+    bool twoDayRule,
+    String cue,
+    String routine,
+    String reward,
+    bool showReward,
+    bool advanced,
+    bool notification,
+    TimeOfDay notTime,
+    String sanction,
+    bool showSanction,
+    String accountant,
+  ) async {
     final firestore = FirebaseFirestore.instance;
     try {
       final habitRef = firestore.collection('habit').doc();
 
-      final habitModel = HabitModel(
-        userId: habit.userId.trim(),
-        habitName: habit.habitName,
+      final habit = Habit(
+        habitData: HabitData(
+          userId: 'HqfRpEga6B1eKW6tLcnN',
+          position: 1,
+          title: title,
+          twoDayRule: twoDayRule,
+          cue: cue,
+          routine: routine,
+          reward: reward,
+          showReward: showReward,
+          advanced: advanced,
+          events: SplayTreeMap<DateTime, List>(),
+          notification: notification,
+          notTime: notTime,
+          sanction: sanction,
+          showSanction: showSanction,
+          accountant: accountant,
+        ),
       );
 
-      await habitRef.set(habitModel.toMap());
+      await habitRef.set(habit.toMap());
 
       return fp.right(null);
     } catch (e) {
       return fp.left(UnknownFailure(e.toString()));
     }
   }
-
 
   //   FutureVoid deleteHabit({required String habitId}) async {
   //   final firestore = FirebaseFirestore.instance;
