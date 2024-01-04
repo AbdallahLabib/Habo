@@ -40,11 +40,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppStateManager>(
-      builder: (
-        context,
-        appStateManager,
-        child,
-      ) {
+      builder: (context, appStateManager, child) {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
@@ -83,7 +79,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
               ),
             ],
           ),
-          body: const CalendarColumn(), //CalendarColumn(),
+          body: const CalendarColumn(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Provider.of<AppStateManager>(context, listen: false)

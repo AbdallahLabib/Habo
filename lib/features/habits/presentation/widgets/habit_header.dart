@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habo/core/helpers/constants.dart';
-import 'package:habo/features/habits/presentation/screen/habit.dart';
+import 'package:habo/features/habits/presentation/widgets/habit.dart';
 import 'package:habo/features/habits/application/habits_manager.dart';
 import 'package:provider/provider.dart';
 

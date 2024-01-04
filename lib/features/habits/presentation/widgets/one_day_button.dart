@@ -1,7 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:habo/core/errors/failure.dart';
+import 'package:habo/core/helpers/app_typedefs.dart';
 import 'package:habo/core/helpers/constants.dart';
-import 'package:habo/features/habits/presentation/screen/habit.dart';
+import 'package:habo/features/habits/domain/entities/habit_entity.dart';
+import 'package:habo/features/habits/presentation/widgets/habit.dart';
 import 'package:habo/features/habits/application/habits_manager.dart';
 import 'package:habo/features/habits/presentation/widgets/in_button.dart';
 import 'package:habo/core/helpers/helpers.dart';
@@ -144,6 +149,8 @@ class OneDayButton extends StatelessWidget {
                         comment
                       ];
                       if (value.key == const Key('Check')) {
+                        updateHabitState(status: 'Check');
+
                         parent.showRewardNotification(date);
                         Provider.of<SettingsManager>(context, listen: false)
                             .playCheckSound();
@@ -151,10 +158,13 @@ class OneDayButton extends StatelessWidget {
                         Provider.of<SettingsManager>(context, listen: false)
                             .playClickSound();
                         if (value.key == const Key('Fail')) {
+                          updateHabitState(status: 'Fail');
                           parent.showSanctionNotification(date);
                         }
                       }
+                      updateHabitState(status: 'Skip');
                     } else if (value.key == const Key('Comment')) {
+                      updateHabitState(comment: comment);
                       showCommentDialog(context, index, comment);
                     } else {
                       if (comment != "") {
@@ -176,6 +186,24 @@ class OneDayButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  FutureVoid updateHabitState({String? status, String? comment}) async {
+    final firestore = FirebaseFirestore.instance;
+    try {
+      final habitRef =
+          firestore.collection('habit_status').doc("E6Qpa0I7MKuAFGmM7jgx");
+      habitRef.update({
+        "day": DateTime.now().day,
+        "date": DateTime.now().millisecondsSinceEpoch,
+        "comment": comment,
+        "status": status,
+      });
+
+      return right(null);
+    } catch (e) {
+      return left(UnknownFailure(e.toString()));
+    }
   }
 
   showCommentDialog(BuildContext context, int index, String comment) {

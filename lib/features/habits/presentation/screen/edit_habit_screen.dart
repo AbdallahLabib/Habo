@@ -1,10 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' as fp;
+import 'package:habo/core/errors/failure.dart';
+import 'package:habo/core/helpers/app_typedefs.dart';
 import 'package:habo/core/helpers/constants.dart';
 import 'package:habo/features/habits/application/habits_manager.dart';
 import 'package:habo/features/habits/data/model/habit_data.dart';
 import 'package:habo/core/navigation/routes.dart';
 import 'package:habo/core/services/notifications.dart';
+import 'package:habo/features/habits/data/model/habit_model.dart';
+import 'package:habo/features/habits/domain/entities/habit_entity.dart';
 import 'package:habo/features/habits/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -229,6 +235,15 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
                   sanction.text.toString(),
                   showSanction,
                   accountant.text.toString(),
+                );
+
+                // Add habit to Firebase Firestore for a specific user whose id is: 'HqfRpEga6B1eKW6tLcnN'
+                // This is just a showcase.
+                createHabit(
+                  habit: HabitEntity(
+                    habitName: title.text.toString(),
+                    userId: 'HqfRpEga6B1eKW6tLcnN',
+                  ),
                 );
               }
               Navigator.of(context).pop();
@@ -494,4 +509,34 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
       ),
     );
   }
+
+  FutureVoid createHabit({required HabitEntity habit}) async {
+    final firestore = FirebaseFirestore.instance;
+    try {
+      final habitRef = firestore.collection('habit').doc();
+
+      final habitModel = HabitModel(
+        userId: habit.userId.trim(),
+        habitName: habit.habitName,
+      );
+
+      await habitRef.set(habitModel.toMap());
+
+      return fp.right(null);
+    } catch (e) {
+      return fp.left(UnknownFailure(e.toString()));
+    }
+  }
+
+
+  //   FutureVoid deleteHabit({required String habitId}) async {
+  //   final firestore = FirebaseFirestore.instance;
+  //   try {
+  //     final habitRef = firestore.collection('habit').where(habitId, isEqualTo: ).doc(habitId);
+  //     await habitRef.delete();
+  //     return fp.right(null);
+  //   } catch (e) {
+  //     return fp.left(UnknownFailure(e.toString()));
+  //   }
+  // }
 }

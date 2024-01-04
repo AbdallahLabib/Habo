@@ -10,8 +10,8 @@ import 'package:habo/features/settings/application/settings_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../widgets/one_day.dart';
-import '../widgets/one_day_button.dart';
+import 'one_day.dart';
+import 'one_day_button.dart';
 
 class Habit extends StatefulWidget {
   const Habit({super.key, required this.habitData});
