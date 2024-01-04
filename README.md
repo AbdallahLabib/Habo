@@ -58,14 +58,18 @@ Each feature inside the Features folder is divided into four layers:
 
 ## Firebase Firestore Data Handling and Storage
 
-Firebase Firestore has been integrated for cloud data storage, designed for a single user scenario at this stage. The user can add a new habit and modify the state of a habit in Firestore. The Firestore DB comprises three collections: "users", "tasks", and "task_status". 
+Firebase Firestore has been integrated for cloud data storage, designed for a single user scenario at this stage. The user can add a new habit and modify the state of a habit in Firestore. 
 
-The "task_status" collection contains the following fields:
-- task_id (String): A unique identifier for the task
-- status (String): The status of the task (e.g., completed, in progress, not started)
-- day (int): The day the task status was updated
-- date (timestamp): The date and time the task status was updated
-- comment (String): Any comments or notes about the task
+- **Data Partitioning:** The data has been partitioned across multiple collections ("users", "habits", and "habit_status") with each collection serving a different purpose and storing a specific type of data.
+- **Scalability with User Growth:** The Firestore DB design allows for easy addition of new users and their habits. Each user has a unique user_id and other habit data. The user_id field in the "habit" collection creates a link to the "users" collection,This allows the database to grow horizontally as new users join.
+- **Scalability with Habit Growth:** The "habit_status" collection can grow as new habits are added or existing habits change their status. The habit_id field in the "habit_status" collection creates a link to the "habits" collection, allowing for scalability as the number of habits or their statuses increase.
+
+The "habit_status" collection contains the following fields:
+- habit_id (String): A unique identifier for the habit
+- status (String): The status of the habit (Check, Failed, Paused)
+- day (int): The day the habit status was updated
+- date (int): The date and time the habit status was updated
+- comment (String): Any comments or notes about the habit
 
 ## Choosing Between Future and Stream
 
