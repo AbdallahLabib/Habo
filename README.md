@@ -24,8 +24,6 @@ It is built using the [Flutter](https://flutter.dev/) framework, a popular and p
 - Add notes to help keep you motivated
 - And more!
 
-## Getting Started
-
 Currently available on the Play Store and App Store.
 
 [![Google play store](https://habo.space/img/resources/en_get.svg)](https://play.google.com/store/apps/details?id=com.pavlenko.Habo) <a target="_blank" href="https://apps.apple.com/us/app/habo-habit-tracker/id1670223360?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 134px; height: 40px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1682121600" alt="Download on the App Store" style="border-radius: 13px; width: 134px; height: 40px;"></a>
@@ -38,26 +36,49 @@ We welcome contributions from the community to help make Habo even better! Wheth
 
 Please read our [contributing guidelines](CONTRIBUTING.md) to learn how you can get involved and make an impact.
 
-## License
+# My Contribution Documentation
 
-Habo is released under the [GPL-3.0 license](LICENSE). Feel free to use, modify, and distribute it as you wish. 
+## Introduction
 
-## Localization
-We believe that the best tools should be available to everyone, no matter what language they speak. To make Habo more accessible to users worldwide, we're excited to offer community-driven localization through Weblate.
+The app was forked and updated with significant changes including restructuring the app with a Feature-First style and clean architecture, and the addition of Firebase Firestore for cloud data storage.
 
-<a href="https://hosted.weblate.org/engage/habo/">
-<img src="https://hosted.weblate.org/widget/habo/open-graph.png" alt="Translation status" width="350" />
-</a>
+## Application Structure
 
-## Acknowledgments
+The application is divided into two main folders:
 
-Special thanks to [Flutter](https://flutter.dev/) and [Dart](https://dart.dev/) teams for creating such amazing tools. 
+1. **Core**: Contains all the services, helpers, and utils of the app.
+2. **Features**: Contains all the app's features.
 
-We hope you enjoy using Habo and find it helpful in building better habits for a better life!
+Each feature inside the Features folder is divided into four layers:
 
-## Support
+1. **Data Layer**: Contains the Remote and Local data sources, the Models folder, and the Repository folder. The Remote uses Firebase and the Local uses SQLite.
+2. **Domain Layer**: Contains the business logic of the app, including the Repository folder which works as an interface for the Data Layer, the Entity Folder which contains all the entities related to the current feature, and the use cases folder which contains all the use cases.
+3. **Application Layer**: Contains the Controller where state management goes.
+4. **Presentation Layer**: Contains the UI of the app, divided into Screens and Widgets.
 
-If you like this project you can [buy me a coffee](https://www.buymeacoffee.com/peterpavlenko)
+## Firebase Firestore Data Handling and Storage
 
-<a href="https://www.buymeacoffee.com/peterpavlenko" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+Firebase Firestore has been integrated for cloud data storage, designed for a single user scenario at this stage. The user can add a new habit and modify the state of a habit in Firestore. The Firestore DB comprises three collections: "users", "tasks", and "task_status". 
+
+The "task_status" collection contains the following fields:
+- task_id (String): A unique identifier for the task
+- status (String): The status of the task (e.g., completed, in progress, not started)
+- day (int): The day the task status was updated
+- date (timestamp): The date and time the task status was updated
+- comment (String): Any comments or notes about the task
+
+## Choosing Between Future and Stream
+
+A choice was made between Future and Stream for Firestore implementation. A Future represents a single asynchronous operation that produces a single value and completes, suitable for one-time requests. A Stream provides a sequence of results, akin to a Future that fires multiple times, suitable for continuous data sources like listening for real-time updates to a database in Firebase.
+
+## Future Updates
+
+Authentication and server connection, currently absent, are planned for future updates. An authentication cycle with phone, username, password, and social authentication with Google and Facebook is planned. The app will also shift from Provider to Riverpod for state management in future updates.
+
+**IMPORTANT NOTE:** 
+- The original version of the app was designed to work offline, catering to individual users without requiring any form of authentication. All data was stored locally on the user's device.
+- An enhancement was introduced to the app with the integration of Firebase Firestore. This allowed for data to be saved in the cloud, expanding the app's data storage capabilities.
+- Despite this integration, the local data storage implementation is still maintained. This is due to the significant time investment required to undertake a full migration of all data to the cloud.
+- Furthermore, a change in the state management solution, from Provider to Riverpod, is also planned for future updates. However, this change also requires a substantial amount of time to implement.
+- In light of these considerations, the app continues to operate with both local and cloud data storage capabilities for the time being.
 
