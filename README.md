@@ -95,3 +95,18 @@ Authentication and server connection, currently absent, are planned for future u
 - Furthermore, a change in the state management solution, from Provider to Riverpod, is also planned for future updates. However, this change also requires a substantial amount of time to implement.
 - In light of these considerations, the app continues to operate with both local and cloud data storage capabilities for the time being.
 
+# Refactoring Plan
+
+The plan for refactoring the application involves the following steps:
+
+1. **Decoupling the Business Logic from the UI in "Habit" Widget:** The business logic in the "Habit" widget, which displays all the details of a habit, needs to be decoupled from the UI. This will make the code cleaner and easier to maintain.
+
+2. **Refactoring "HabitManager":** The "HabitManager" should be sent to the data layer, and an abstract layer should be created on top of it to handle its communication with the Domain layer. Although "HabitManager" has already been sent to the Data layer, creating the abstraction layer and handling the communication with the Domain layer would require significant refactoring time and effort.
+
+3. **State Management:** The state management solution should be switched from Provider to Riverpod. Riverpod not only handles states but also manages Dependency Injection, which enhances the separation of concerns. This change will give Riverpod full control over the UI rebuilds.
+
+4. **Unit Testing:** Unit tests should be written for the application layer and the usecases inside the Domain layer. This will help ensure the integrity of the application and catch any potential issues early in the development process.
+
+The above steps represent a significant overhaul of the application's architecture and will require a considerable amount of time to implement. However, they will result in a more scalable, maintainable, and testable application.
+
+
