@@ -64,8 +64,17 @@ Firebase Firestore has been integrated for cloud data storage, designed for a si
 - **Scalability with User Growth:** The Firestore DB design allows for easy addition of new users and their habits. Each user has a unique user_id and other habit data. The user_id field in the "habit" collection creates a link to the "users" collection,This allows the database to grow horizontally as new users join.
 - **Scalability with Habit Growth:** The "habit_status" collection can grow as new habits are added or existing habits change their status. The habit_id field in the "habit_status" collection creates a link to the "habits" collection, allowing for scalability as the number of habits or their statuses increase.
 
+The "users" collection contains the following fields:
+- user_name (String)
+- avatar (String)
+- In the future we can add more fields
+
+The "habits" collection contains the following fields:
+- user_id (String): A unique identifier for the user to link this collection to the "users" collection
+- All "habit" attributes that are saved locally, e.g: title, cue, routine, sanction, showReward, showSanction, notification, noTime ...
+
 The "habit_status" collection contains the following fields:
-- habit_id (String): A unique identifier for the habit
+- habit_id (String): A unique identifier for the habit to link this collection to the "habits" collection
 - status (String): The status of the habit (Check, Failed, Paused)
 - day (int): The day the habit status was updated
 - date (int): The date and time the habit status was updated
