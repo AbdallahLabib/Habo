@@ -28,15 +28,7 @@ Currently available on the Play Store and App Store.
 
 [![Google play store](https://habo.space/img/resources/en_get.svg)](https://play.google.com/store/apps/details?id=com.pavlenko.Habo) <a target="_blank" href="https://apps.apple.com/us/app/habo-habit-tracker/id1670223360?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 134px; height: 40px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1682121600" alt="Download on the App Store" style="border-radius: 13px; width: 134px; height: 40px;"></a>
 
-
-
-## Contributing
-
-We welcome contributions from the community to help make Habo even better! Whether you're a developer, designer, or just an enthusiastic user, there are many ways you can help. 
-
-Please read our [contributing guidelines](CONTRIBUTING.md) to learn how you can get involved and make an impact.
-
-# My Contribution Documentation
+# My Contribution Documentation on this project
 
 ## Introduction
 
